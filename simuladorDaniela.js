@@ -1,42 +1,80 @@
+//Creación de un array de productos
+const arrayProductos=[];
+const producto1=new producto('PRY1','Playera',150);
+const producto2=new producto('PRY2','Falda',180);
+const producto3=new producto('PRY3','Vestido',300);
+const producto4=new producto('PRY4','Jeans',350);
+const producto5=new producto('PRY5','Tenis',600);
+
+arrayProductos.push(producto1,producto2,producto3,producto4,producto5);
+
+const ordenAsc=()=>{
+    arrayProductos.sort((a,b)=>a.precio-b.precio);
+    muestraDatos();
+}
+
+const ordenDesc=()=>{
+    arrayProductos.sort((a,b)=>b.precio-a.precio);
+    muestraDatos();
+}
+
+const muestraDatos = () => {
+    let array=[];
+    arrayProductos.forEach(producto=>array.push(producto.id+': '+producto.nombre+': $'+producto.precio));
+    alert('Lista de precios:'+'\n'+array.join('\n'));
+};
+
+
+function ordenPref(){
+let opc='';
+let rep;
+
+do{
+    rep=false;//Para que no se quede en un ciclo sin fin
+    opc=parseInt(prompt('Ingrese 1 para visualizar el catálogo por el precio más bajo y 2 para visualizar por el precio más alto') );
+    switch(opc)
+    {
+        case 1:
+            ordenAsc();
+        break;
+        
+        case 2:
+            ordenDesc();
+        break;
+
+        default:
+            rep=true;
+            alert('Función no disponible intente de nuevo.')
+            
+    }
+}while(rep)    
+}
+
+
 function comprarProductos() {
     let clave = '';
-    let precio = 0;
     let cantidad = 0;
     let totalCompra = 0;
     let cantidadTotal = 0;
     let seguirComprando = false;
 
     do {
+        ordenPref();
         clave = prompt("Ingrese la clave del producto que desea agregar al carrito", 'Ej: PRY1').toUpperCase();
-        cantidad = parseInt(prompt('¿Cuantos queres comprar?'));
+        cantidad = parseInt(prompt('¿Cuantos quieres comprar?'));
 
         let cantidadValidada = validacionCant(cantidad);
 
-        switch (clave) {
-            case 'PRY1'://Playera
-                precio = 150;
-                break;
-            case 'PRY2'://Falda
-                precio = 180;
-                break;
-            case 'PRY3'://Vestido
-                precio = 300;
-                break;
-            case 'PRY4'://Jeans
-                precio = 350;
-                break;
-            case 'PRY5'://Tenis
-                precio = 600;
-                break;
-            default://Clave incorrecta
-                alert('La clave ingresada no se encuentra en nuestro sistema');
-                precio = 0;
-                cantidad = 0;
-                break;
+        const productoSel=arrayProductos.find(producto=>producto.id===clave);
+        
+        if(productoSel){
+            totalCompra += productoSel.precio * cantidadValidada;
+            cantidadTotal += cantidad;
         }
-
-        totalCompra += precio * cantidadValidada;
-        cantidadTotal += cantidad;
+        else{
+            alert('El producto seleccionado no se encuentra en el catálogo');
+        }
+        
 
         seguirComprando = confirm('¿Desea agregar más productos al carrito?');
 
@@ -79,4 +117,4 @@ function calcularEnvio(totalCompra) {
     }
 }
 
-calcularEnvio(aplicarDescuento(comprarProductos()));
+calcularEnvio(aplicarDescuento(comprarProductos()));  
