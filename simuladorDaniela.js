@@ -90,7 +90,7 @@ function validacionCant(cantidad) {
         } else {
             alert('Debe ingresar un número distinto de cero.')
         }
-        cantidad = parseInt(prompt('¿Cuantos queres comprar?'));
+        cantidad = parseInt(prompt('¿Cuantos quieres comprar?'));
     }
 
     return cantidad;
@@ -108,7 +108,7 @@ function calcularEnvio(totalCompra) {
     let tieneEnvioADomicilio = confirm('Queres envio a domicilio?');
 
     if (tieneEnvioADomicilio && totalCompra >= 900) {
-        alert('Tenes envio gratis. El total de la compra es: '+totalCompra);
+        alert('Tienes envio gratis. El total de la compra es: '+totalCompra);
     } else if (tieneEnvioADomicilio && totalCompra < 900 && totalCompra !== 0) {
         totalCompra += 99;
         alert('El envío cuesta $99. El total de la compra es: '+totalCompra);
