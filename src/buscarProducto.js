@@ -3,9 +3,9 @@ import { productos } from "./stock.js";
 
 const inputSearch = document.getElementById("buscarProducto");
 
-const buscarProducto = (productos, productoNombre) => {
-    const productosFiltrados = productos.filter( producto => producto.nombre.toLowerCase().includes(productoNombre.toLowerCase()));
-    mostrarProductos(productosFiltrados);
+const buscarProducto = (productos, productoDesc) => {
+    const filtProd = productos.filter( producto => producto.desc.toLowerCase().includes(productoDesc.toLowerCase()));
+    mostrarProductos(filtProd);
 };
 
 inputSearch.addEventListener("input", (e) => {

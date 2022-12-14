@@ -13,6 +13,7 @@ const validarProductoRepetido = (productoId) => {
     const productoRepetido = carrito.find( producto => producto.id === productoId);
 
     if (productoRepetido) {
+        
         productoRepetido.cantidad++
         const cantidadProducto = document.getElementById(`cantidad${productoRepetido.id}`);
         cantidadProducto.innerText = `Cantidad: ${productoRepetido.cantidad}`;
@@ -35,7 +36,9 @@ const agregarAlCarrito = (productoId) => {
     div.classList.add("productoEnCarrito");
     div.innerHTML = `<p>${producto.nombre}</p>
                     <p>Precio: ${producto.precio}</p>
+                    <button id=sumar${producto.id} class="btn waves-effect waves-ligth boton-sumar" value="${producto.id}">+</button>
                     <p id=cantidad${producto.id}>Cantidad: ${producto.cantidad}</p>
+                    <button id=restar${producto.id} class="btn waves-effect waves-ligth boton-restar" value="${producto.id}">-</button>
                     <button id=eliminar${producto.id} class="btn waves-effect waves-ligth boton-eliminar" value="${producto.id}">X</button>
                     `
     contenedor.appendChild(div);
@@ -56,7 +59,9 @@ const pintarCarrito = (carrito) => {
         div.classList.add("productoEnCarrito");
         div.innerHTML = `<p>${producto.nombre}</p>
                     <p>Precio: ${producto.precio}</p>
+                    <button id=sumar${producto.id} class="btn waves-effect waves-ligth boton-sumar" value="${producto.id}">+</button>
                     <p id=cantidad${producto.id}>Cantidad: ${producto.cantidad}</p>
+                    <button id=restar${producto.id} class="btn waves-effect waves-ligth boton-restar" value="${producto.id}">-</button>
                     <button id=eliminar${producto.id} class="btn waves-effect waves-ligth boton-eliminar" value="${producto.id}">X</button>
                     `
         contenedor.appendChild(div);
@@ -65,10 +70,31 @@ const pintarCarrito = (carrito) => {
 
 const eliminarProductoCarrito = (productoId) => {
     const carritoStorage = obtenerCarritoStorage();
-    const carritoActualizado = carritoStorage.filter( producto => producto.id != productoId);
+    const carritoActualizado = carritoStorage.filter(producto => producto.id != productoId);
 
     actualizarTotalesCarrito(carritoActualizado);
     pintarCarrito(carritoActualizado);
 };
 
-export { agregarAlCarrito, validarProductoRepetido, pintarCarrito, eliminarProductoCarrito };
+const sumarRestProductoCarrito = (productoId,opc) => {
+    const carritoStorage = obtenerCarritoStorage();
+    for (const producto of carritoStorage) {
+        if(productoId==producto.id){
+            if(opc==1)
+            {producto.cantidad++;}
+            else
+            {producto.cantidad--;}
+        }        
+    }
+    const carritoActualizado = carritoStorage.filter(producto => producto.cantidad>=1);
+    actualizarTotalesCarrito(carritoActualizado);
+    pintarCarrito(carritoActualizado); 
+    
+
+    
+};
+
+
+
+
+export { agregarAlCarrito, validarProductoRepetido, pintarCarrito, eliminarProductoCarrito, sumarRestProductoCarrito};

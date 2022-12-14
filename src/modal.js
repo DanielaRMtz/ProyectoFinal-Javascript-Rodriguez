@@ -1,9 +1,10 @@
 import { eliminarProductoCarrito } from "./accionesCarrito.js";
+import { sumarRestProductoCarrito } from "./accionesCarrito.js";
 
 const modalContenedor = document.querySelector('.modal-contenedor');
 const abrirCarrito = document.getElementById('cesta-carrito');
 const cerrarCarrito = document.getElementById('btn-cerrar-carrito');
-const modalCarrito = document.querySelector('.modal-carrito')
+const modalCarrito = document.querySelector('.modal-carrito');
 
 abrirCarrito.addEventListener('click', () => {
     modalContenedor.classList.toggle('modal-active')
@@ -41,3 +42,56 @@ modalCarrito.addEventListener("click", (e) => {
         })
     }
 });
+
+modalCarrito.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (e.target.classList.contains('boton-sumar')) {
+        Swal.fire({
+            title: '¿Esta seguro?',
+            text: 'Va a sumar el producto',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sumar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sumarRestProductoCarrito(e.target.value,1);
+                Swal.fire(
+                    'Agregado',
+                    'El producto ha sido sumado',
+                    'success'
+                )
+            }
+        })
+    }
+});
+
+modalCarrito.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (e.target.classList.contains('boton-restar')) {
+        Swal.fire({
+            title: '¿Esta seguro?',
+            text: 'Va a restar el producto',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Restar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sumarRestProductoCarrito(e.target.value,0);
+                Swal.fire(
+                    'Restado',
+                    'El producto ha sido restado',
+                    'success'
+                )
+            }
+        })
+    }
+});
+
+
+
